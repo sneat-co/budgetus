@@ -1,0 +1,16 @@
+<!--happeningLiabilitiesByPeriod: {{happeningLiabilitiesByPeriod()|json}}-->
+<ion-accordion-group
+  [value]="activePeriod()"
+  (ionChange)="onPeriodChanged($event)"
+>
+  @for (period of periods; track period) {
+    <budgetus-budget-period
+      [$showBy]="$showBy()"
+      (showByChange)="$showBy.set($event)"
+      [$liabilitiesMode]="$liabilitiesMode()"
+      [activePeriod]="activePeriod()"
+      [$period]="period"
+      [liabilitiesByPeriod]="$liabilitiesByPeriod()"
+    />
+  }
+</ion-accordion-group>
