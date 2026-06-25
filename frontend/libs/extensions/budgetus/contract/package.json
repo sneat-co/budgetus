@@ -5,10 +5,10 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@sneat/core": "0.12.1",
-    "@sneat/space-models": "0.12.1",
+    "@sneat/core": "0.13.0",
+    "@sneat/space-models": "0.13.0",
     "@sneat/extension-contactus-contract": "0.12.1",
-    "@sneat/extension-calendarius-contract": "0.12.1",
+    "@sneat/extension-calendarius-contract": "0.13.0",
     "vitest": "^4.0.9"
   },
   "sideEffects": false
