@@ -2,7 +2,7 @@ import { InjectionToken } from '@angular/core';
 import { ISpaceContext } from '@sneat/space-models';
 import { Observable } from 'rxjs';
 import { IListContext } from '../contexts';
-import { ListType } from '../dto';
+import { IBudgetOverridePatch, IBudgetRollup, ListType } from '../dto';
 import {
   ICreateListRequest,
   IDeleteListItemsRequest,
@@ -34,6 +34,24 @@ export interface IBudgetusService {
     listType: ListType,
     listID: string,
   ): Observable<IListContext>;
+
+  // --- Budget tab (the read-model projection over renewals + happenings; see
+  // budget-tab-mvp.md Section 3/4). Recomputed on every read, not a plain CRUD
+  // collection — hence Observable rather than a one-shot fetch. ---
+
+  /** Watches the derived+overridden budget rollup for a space. */
+  watchBudget(spaceID: string): Observable<IBudgetRollup>;
+
+  /**
+   * Persists a user override (target amount and/or surprise-hide flag) for a
+   * single computed budget line item, keyed by its `IBudgetLineItem.id`.
+   * Triggers a re-emission on the `watchBudget()` observable.
+   */
+  setOverride(
+    spaceID: string,
+    lineItemId: string,
+    patch: IBudgetOverridePatch,
+  ): Promise<void>;
 }
 
 export const BUDGETUS_SERVICE = new InjectionToken<IBudgetusService>(

@@ -1,6 +1,12 @@
 import { Provider } from '@angular/core';
 import { BUDGETUS_SERVICE } from '@sneat/extension-budgetus-contract';
-import { ListService } from './services';
+import {
+  BudgetusDataSource,
+  BudgetusOverridesStore,
+  BudgetusProjectionService,
+  DemoBudgetusDataSource,
+} from './budget';
+import { BudgetusService, ListService } from './services';
 
 // The extension's single root register function: binds EVERY always-on contract
 // token to its concrete implementation in one place, so a host enables the whole
@@ -14,5 +20,14 @@ import { ListService } from './services';
 // README "Wiring extension services (DI)" section and the frontend-apps standard:
 // https://github.com/sneat-co/sneat-libs/blob/main/docs/extension-standards/frontend-apps.md
 export function provideBudgetusInternal(): Provider[] {
-  return [ListService, { provide: BUDGETUS_SERVICE, useExisting: ListService }];
+  return [
+    ListService,
+    BudgetusOverridesStore,
+    BudgetusProjectionService,
+    // Fable: swap DemoBudgetusDataSource for AssetusCalendariusDataSource when
+    // wired to live services — see budgetus-data-source.ts.
+    { provide: BudgetusDataSource, useClass: DemoBudgetusDataSource },
+    BudgetusService,
+    { provide: BUDGETUS_SERVICE, useExisting: BudgetusService },
+  ];
 }

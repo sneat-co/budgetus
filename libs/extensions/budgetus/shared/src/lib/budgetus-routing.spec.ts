@@ -1,6 +1,10 @@
 import { budgetusRoutes } from './budgetus-routing';
 
 describe('budgetusRoutes', () => {
+  it('exposes the budget tab route', () => {
+    expect(budgetusRoutes.some((r) => r.path === 'budget')).toBe(true);
+  });
+
   it('exposes the lists overview route', () => {
     expect(budgetusRoutes.some((r) => r.path === 'lists')).toBe(true);
   });

@@ -4,6 +4,17 @@ import { Route } from '@angular/router';
 
 export const budgetusRoutes: Route[] = [
   {
+    // The Budget tab (budget-tab-mvp.md): a read-model rollup of derived
+    // budget line items. Reachable from the space menu ("Budget" item,
+    // BudgetusSpaceMenuComponent) alongside the existing "Lists" item.
+    path: 'budget',
+    data: { title: 'Budget' },
+    loadComponent: () =>
+      import('./pages/budget/budget-page.component').then(
+        (m) => m.BudgetPageComponent,
+      ),
+  },
+  {
     path: 'lists',
     data: { title: 'Lists' },
     // canActivate: [AuthGuard],

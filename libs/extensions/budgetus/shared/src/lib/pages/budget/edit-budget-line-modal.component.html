@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-title>{{ lineItem.title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon name="close-outline" />
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Target amount</ion-label>
+      <ion-input
+        type="number"
+        inputmode="decimal"
+        [ngModel]="targetValue"
+        (ngModelChange)="targetValue = $event"
+      />
+    </ion-item>
+    <ion-item lines="none">
+      <ion-select
+        label="Currency"
+        interface="popover"
+        [ngModel]="targetCurrency"
+        (ngModelChange)="targetCurrency = $event"
+      >
+        <ion-select-option value="EUR">EUR</ion-select-option>
+        <ion-select-option value="USD">USD</ion-select-option>
+        <ion-select-option value="GBP">GBP</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    @if (lineItem.source === 'gift') {
+      <ion-item lines="none">
+        <ion-toggle
+          [ngModel]="isSurprise"
+          (ngModelChange)="isSurprise = $event"
+        >
+          <ion-label>
+            🎁 Keep as a surprise
+            <p>Hides the real title in the shared budget view.</p>
+          </ion-label>
+        </ion-toggle>
+      </ion-item>
+    }
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-label>Cancel</ion-label>
+      </ion-button>
+      <ion-button color="primary" (click)="save()">
+        <ion-icon name="save-outline" slot="start" />
+        <ion-label>Save</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

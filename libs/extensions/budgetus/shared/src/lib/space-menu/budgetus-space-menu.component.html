@@ -29,6 +29,18 @@
     </ion-select>
   </ion-item>
 
+  <!-- The Budget tab (budget-tab-mvp.md): derived renewals + gift budget rollup. -->
+  <ion-item
+    tappable
+    [routerLink]="spacePageUrl('budget')"
+    routerDirection="root"
+    [disabled]="$disabled()"
+    (click)="closeMenu()"
+  >
+    <ion-icon name="cash-outline" slot="start" />
+    <ion-label>Budget</ion-label>
+  </ion-item>
+
   <!-- Lists of the selected space. -->
   <ion-item
     tappable
