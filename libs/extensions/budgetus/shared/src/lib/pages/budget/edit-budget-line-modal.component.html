@@ -2,7 +2,7 @@
   <ion-toolbar color="light">
     <ion-title>{{ lineItem.title }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="cancel()">
+      <ion-button (click)="cancel()" aria-label="Close">
         <ion-icon name="close-outline" />
       </ion-button>
     </ion-buttons>
@@ -12,8 +12,8 @@
 <ion-content class="ion-padding">
   <ion-list>
     <ion-item>
-      <ion-label position="stacked">Target amount</ion-label>
       <ion-input
+        label="Target amount"
         type="number"
         inputmode="decimal"
         [ngModel]="targetValue"

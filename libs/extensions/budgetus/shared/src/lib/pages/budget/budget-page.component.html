@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="light">
+  <ion-toolbar color="light" class="with-end-buttons">
     <ion-buttons slot="start">
       <ion-menu-button />
     </ion-buttons>
@@ -8,6 +8,11 @@
       <ion-button
         (click)="$revealSurprises.set(!$revealSurprises())"
         title="Demo only: toggle whether surprise gift lines are masked"
+        [attr.aria-label]="
+          $revealSurprises()
+            ? 'Hide surprise gift lines'
+            : 'Reveal surprise gift lines'
+        "
       >
         <ion-icon
           [name]="$revealSurprises() ? 'eye-off-outline' : 'eye-outline'"
@@ -18,7 +23,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="cardy">
   @if ($loading()) {
     <ion-card>
       <ion-card-content>
