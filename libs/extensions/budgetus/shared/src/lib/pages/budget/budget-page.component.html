@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar color="light" class="with-end-buttons">
+    <ion-buttons slot="start">
+      <ion-menu-button />
+    </ion-buttons>
+    <ion-title>💰 Budget</ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        (click)="$revealSurprises.set(!$revealSurprises())"
+        title="Demo only: toggle whether surprise gift lines are masked"
+        [attr.aria-label]="
+          $revealSurprises()
+            ? 'Hide surprise gift lines'
+            : 'Reveal surprise gift lines'
+        "
+      >
+        <ion-icon
+          [name]="$revealSurprises() ? 'eye-off-outline' : 'eye-outline'"
+          slot="icon-only"
+        />
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="cardy">
+  @if ($loading()) {
+    <ion-card>
+      <ion-card-content>
+        <ion-spinner name="lines" class="ion-margin-end" />
+        <ion-text color="medium">Loading…</ion-text>
+      </ion-card-content>
+    </ion-card>
+  } @else if ($error()) {
+    <ion-card>
+      <ion-card-header color="danger">
+        <ion-card-title>Failed to load budget</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-text color="danger">{{ $error()?.message }}</ion-text>
+        <div class="ion-margin-top">
+          <ion-button size="small" (click)="reload()">Retry</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  } @else {
+    @let rollup = $rollup();
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          Annual total: {{ formatMoney(rollup?.annualTotal) }}
+        </ion-card-title>
+      </ion-card-header>
+      @if (rollup?.mostExpensiveMonthISO) {
+        <ion-card-content>
+          <ion-text color="medium">
+            Most expensive month:
+            <b>{{ formatMonth(rollup!.mostExpensiveMonthISO) }}</b>
+          </ion-text>
+        </ion-card-content>
+      }
+    </ion-card>
+
+    <ion-card>
+      <ion-list>
+        @for (group of $displayMonths(); track group.monthISO) {
+          <ion-item-group>
+            <ion-item-divider color="light">
+              <ion-label style="font-weight: bold">{{
+                formatMonth(group.monthISO)
+              }}</ion-label>
+              <ion-badge slot="end" color="light">{{
+                formatMoney(group.total)
+              }}</ion-badge>
+            </ion-item-divider>
+            @for (item of group.items; track item.id) {
+              <ion-item
+                tappable
+                detail="false"
+                (click)="openEditLineItemModal(item)"
+              >
+                <ion-icon
+                  [name]="iconFor(item)"
+                  slot="start"
+                  [color]="item.isSurprise ? 'tertiary' : 'medium'"
+                />
+                <ion-label>
+                  {{ item.title }}
+                  <p>{{ item.dateISO }}</p>
+                </ion-label>
+                <ion-note slot="end">{{
+                  formatMoney(item.targetAmount ?? item.amount)
+                }}</ion-note>
+              </ion-item>
+            }
+          </ion-item-group>
+        } @empty {
+          <ion-item lines="none">
+            <ion-label color="medium">No upcoming budget items yet.</ion-label>
+          </ion-item>
+        }
+      </ion-list>
+    </ion-card>
+  }
+</ion-content>

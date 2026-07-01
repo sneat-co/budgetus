@@ -1,0 +1,90 @@
+{
+  "name": "budgetus-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "budgetus",
+  "sourceRoot": "apps/budgetus-app/src",
+  "tags": [
+    "type:app",
+    "scope:budgetus"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/budgetus-app",
+        "browser": "apps/budgetus-app/src/main.ts",
+        "tsConfig": "apps/budgetus-app/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/budgetus-app/public"
+          }
+        ],
+        "styles": [
+          "apps/budgetus-app/src/styles.scss"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "4mb",
+              "maximumError": "6mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "budgetus-app:build:production"
+        },
+        "development": {
+          "buildTarget": "budgetus-app:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@angular/build:unit-test",
+      "options": {
+        "watch": false,
+        "runnerConfig": "apps/budgetus-app/vitest.config.ts"
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "budgetus-app:build",
+        "port": 4200,
+        "staticFilePath": "dist/apps/budgetus-app/browser",
+        "spa": true
+      }
+    }
+  }
+}

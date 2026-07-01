@@ -1,20 +1,55 @@
-# Root-level ignores (frontend/ and backend/ have their own as needed)
+# See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-# OS / editor
+# compiled output
+dist
+tmp
+out-tsc
+
+# dependencies
+node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
 .DS_Store
-*.swp
+Thumbs.db
 
-# Go
-/backend/bin/
-/backend/dist/
-*.test
-*.out
-
-# Node (frontend has its own .gitignore too)
-node_modules/
-dist/
 .nx/cache
 .nx/workspace-data
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md
 
-# Firebase Hosting deploy cache
-.firebase/
+.angular
+.claude
+.playwright-mcp
+
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
+
+.nx/polygraph
+.nx/self-healing
+__screenshots__/
