@@ -1,0 +1,22 @@
+{
+  "name": "budgetus-landing",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build && pnpm run build:app && node scripts/assemble-app.mjs",
+    "build:landing": "astro build",
+    "build:app": "cd .. && npx nx build budgetus-app --base-href=/",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.0",
+    "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "4.103.0"
+  }
+}

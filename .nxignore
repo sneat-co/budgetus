@@ -1,0 +1,4 @@
+# Legacy dual-dir workspace preserved during the sneat-ext-template re-scaffold.
+# It has its own nx.json/pnpm-workspace and must not be scanned into the root
+# Nx project graph (duplicate project names otherwise).
+legacy-frontend/
